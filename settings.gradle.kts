@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "table-parser"
-include("app", "list", "utilities", "table-parser-core")
+include("table-parser-api", "table-parser-core")
