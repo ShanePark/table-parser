@@ -10,6 +10,9 @@ plugins {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation(project(":table-parser-core"))
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.apache.poi:poi-ooxml:5.2.2")
 }
