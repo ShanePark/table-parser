@@ -28,4 +28,15 @@ class WorkbookConfig(
             format = "#,##0;-#,##0"
         )
     }
+
+    override fun toString(): String {
+        return """WorkbookConfig (
+         defaultProperty=$defaultProperty,
+         tHeadProperty=$tHeadProperty,
+         numberProperty=$numberProperty,
+         cellProperties=$cellProperties
+        )"""
+    }
+
+
 }

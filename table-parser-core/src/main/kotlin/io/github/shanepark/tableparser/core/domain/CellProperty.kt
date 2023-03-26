@@ -45,4 +45,9 @@ class CellProperty(
 
     }
 
+    override fun toString(): String {
+        return "CellProperty(alignment=$alignment, verticalAlignment=$verticalAlignment, backgroundColor=$backgroundColor, textColor=$textColor, format=$format)"
+    }
+
+
 }
