@@ -1,11 +1,11 @@
 package io.github.shanepark.tableparser.core.domain
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.ss.usermodel.Workbook
 import java.io.File
 import java.io.InputStream
 
 class ExcelResult(
-    private val workbook: XSSFWorkbook
+    private val workbook: Workbook
 ) : AutoCloseable {
 
     val file: File = File.createTempFile("tmp", ".xlsx")

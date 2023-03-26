@@ -16,7 +16,7 @@ class TableParserTest {
         val workbookConfig = WorkbookConfig()
             .addCellProperty(className = "special", CellProperty(backgroundColor = WorkbookColor.DARK_GREY))
         val tableParser = TableParser(workbookConfig = workbookConfig)
-        val excelResult = tableParser.parseHtml(sampleHTML)
+        val excelResult = tableParser.htmlToExcel(sampleHTML)
 
         assertThat(excelResult).isNotNull
         assertThat(excelResult.size).isGreaterThan(0)
