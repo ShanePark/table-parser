@@ -74,11 +74,11 @@ class SheetRenderer(
         cellStyleMap[cellStyleVO] = cellStyle
 
         workbookConfig.defaultProperty.applyCellStyle(workbook, cellStyle, dataFormatMap)
-        if (cellStyleVO.isThead) {
-            workbookConfig.tHeadProperty.applyCellStyle(workbook, cellStyle, dataFormatMap)
-        }
         if (cellStyleVO.isNumber) {
             workbookConfig.numberProperty.applyCellStyle(workbook, cellStyle, dataFormatMap)
+        }
+        if (cellStyleVO.isThead) {
+            workbookConfig.tHeadProperty.applyCellStyle(workbook, cellStyle, dataFormatMap)
         }
         applyCustomClassStyles(column, cellStyle)
 
@@ -94,7 +94,7 @@ class SheetRenderer(
     }
 
     private fun applyCustomClassStyles(column: Element, cellStyle: XSSFCellStyle) {
-        val customProperties = workbookConfig.cellProperties
+        val customProperties = workbookConfig.customProperties
         for (customProperty in customProperties.entries) {
             val className = customProperty.key
             if (column.hasClass(className) || column.parents().hasClass(className)) {

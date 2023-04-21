@@ -3,18 +3,22 @@ package io.github.shanepark.tableparser.core.config
 import io.github.shanepark.tableparser.core.domain.CellProperty
 import io.github.shanepark.tableparser.core.domain.enums.WorkbookColor
 import org.apache.poi.ss.usermodel.HorizontalAlignment
+import java.util.*
 
 class WorkbookConfig(
     val defaultProperty: CellProperty = CellProperty(),
     val tHeadProperty: CellProperty = tHeadProp,
     val numberProperty: CellProperty = numberProp,
 ) {
-    val cellProperties: MutableMap<String, CellProperty> = mutableMapOf()
-    fun addCellProperty(className: String, cellProperty: CellProperty): WorkbookConfig {
-        if (cellProperties.containsKey(className)) {
+    private val _customProperties: MutableMap<String, CellProperty> = mutableMapOf()
+    val customProperties: Map<String, CellProperty>
+        get() = Collections.unmodifiableMap(_customProperties)
+
+    fun addCustomProperty(className: String, cellProperty: CellProperty): WorkbookConfig {
+        if (_customProperties.containsKey(className)) {
             throw IllegalArgumentException("CellProperty for $className already exists")
         }
-        cellProperties[className] = cellProperty
+        _customProperties[className] = cellProperty
         return this
     }
 
@@ -30,13 +34,18 @@ class WorkbookConfig(
     }
 
     override fun toString(): String {
-        return """WorkbookConfig (
-         defaultProperty=$defaultProperty,
-         tHeadProperty=$tHeadProperty,
-         numberProperty=$numberProperty,
-         cellProperties=$cellProperties
-        )"""
+        return "\n* WorkbookConfig *" +
+                "\n - defaultProperty= $defaultProperty, " +
+                "\n - tHeadProperty= $tHeadProperty, " +
+                "\n - numberProperty= $numberProperty, " +
+                "\n - customProperties= ${customPropertiesToString()}"
     }
 
+    private fun customPropertiesToString(): String {
+        if (customProperties.isEmpty()) return "(empty)"
+        return customProperties.map {
+            "\n\t - ${it.key} = ${it.value}"
+        }.joinToString()
+    }
 
 }

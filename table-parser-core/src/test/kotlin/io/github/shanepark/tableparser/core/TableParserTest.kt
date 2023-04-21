@@ -14,7 +14,7 @@ class TableParserTest {
     @Test
     fun parseHtml() {
         val workbookConfig = WorkbookConfig()
-            .addCellProperty(className = "special", CellProperty(backgroundColor = WorkbookColor.DARK_GREY))
+            .addCustomProperty(className = "special", CellProperty(backgroundColor = WorkbookColor.DARK_GREY))
         val tableParser = TableParser(workbookConfig = workbookConfig)
         val excelResult = tableParser.htmlToExcel(sampleHTML)
 

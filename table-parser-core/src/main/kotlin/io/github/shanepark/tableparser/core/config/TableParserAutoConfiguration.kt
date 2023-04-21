@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConditionalOnProperty(prefix = "table-parser", name = ["enabled"], havingValue = "true")
 @ConditionalOnMissingBean(TableParser::class)
 open class TableParserAutoConfiguration {
 

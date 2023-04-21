@@ -17,8 +17,13 @@ class TableParser(
         }
 
         val excelRenderer = ExcelRenderer(tables, workbookConfig)
-        excelRenderer.createWorkbook().use { workbook ->
-            return ExcelResult(workbook)
+
+        try {
+            excelRenderer.createWorkbook().use { workbook ->
+                return ExcelResult(workbook)
+            }
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            throw IllegalArgumentException("Invalid table structure")
         }
     }
 
