@@ -24,7 +24,7 @@ class ParserConfig {
             textColor = BLACK,
             alignment = HorizontalAlignment.CENTER,
             verticalAlignment = VerticalAlignment.CENTER,
-            borderStyle = BorderStyle.HAIR,
+            borderStyle = BorderStyle.THIN,
         )
         val tHeadProperty = CellProperty(
             backgroundColor = DARK_GREY,

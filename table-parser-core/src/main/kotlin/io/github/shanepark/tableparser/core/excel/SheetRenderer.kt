@@ -4,7 +4,6 @@ import io.github.shanepark.tableparser.core.config.WorkbookConfig
 import io.github.shanepark.tableparser.core.domain.CellStyleVO
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.util.CellRangeAddress
-import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFCellStyle
 import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -35,18 +34,20 @@ class SheetRenderer(
                 }
                 val cell = excelRow.getCell(columnIndex)
                 cell.setCellValue(column.text())
-                applyCellStyle(column, cell)
-                mergeCells(rowIndex, columnIndex, column)
+                val cellStyle = getCellStyle(column)
+                mergeAndApplyStyle(rowIndex, columnIndex, column, cellStyle)
             }
         }
     }
 
-    private fun mergeCells(rowIndex: Int, columnIndex: Int, column: Element) {
+    private fun mergeAndApplyStyle(rowIndex: Int, columnIndex: Int, column: Element, cellStyle: XSSFCellStyle) {
         val rowSpan = column.attr("rowspan").toIntOrNull() ?: 1
         val colSpan = column.attr("colspan").toIntOrNull() ?: 1
         for (i in 0 until rowSpan) {
             for (j in 0 until colSpan) {
                 isCreatedMatrix[rowIndex + i][columnIndex + j] = true
+                val currentCell = excelRows[rowIndex + i].getCell(columnIndex + j)
+                currentCell.cellStyle = cellStyle
             }
         }
         if (rowSpan == 1 && colSpan == 1)
@@ -57,14 +58,14 @@ class SheetRenderer(
         sheet.addMergedRegion(cellRangeAddress)
     }
 
-    private fun applyCellStyle(column: Element, cell: XSSFCell) {
+    private fun getCellStyle(column: Element): XSSFCellStyle {
         val cellStyleVO = CellStyleVO(
             isThead = isInThead(column),
             isNumber = isNumber(column),
             classNames = getClassNames(column)
         )
 
-        cell.cellStyle = cellStyleMap[cellStyleVO] ?: run {
+        return cellStyleMap[cellStyleVO] ?: run {
             createCellStyle(cellStyleVO, column)
         }
     }

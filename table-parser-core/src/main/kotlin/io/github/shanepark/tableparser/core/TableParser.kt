@@ -23,6 +23,7 @@ class TableParser(
                 return ExcelResult(workbook)
             }
         } catch (e: ArrayIndexOutOfBoundsException) {
+            e.printStackTrace()
             throw IllegalArgumentException("Invalid table structure")
         }
     }
